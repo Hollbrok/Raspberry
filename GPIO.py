@@ -2,6 +2,8 @@ import RPi.GPIO as GPIO
 import time
 import math
 
+NUMBER_OF_LEDS = 8
+
 def lightUp(ledNumber, period):
     GPIO.output(bits[ledNumber], 1)
     time.sleep(period)
@@ -31,25 +33,25 @@ def runningDark(count, period):
     GPIO.output(bits, 0)
 
 def decToBinList(decNumber):
-    N = 7
+    N = NUMBER_OF_LEDS - 1
     p = 0
-    X = []
+    binNumber = []
 
     while N > 0:
-        p = int(decNumber/2**N)
+        p = int(decNumber / 2 ** N)
         if p == 1:
-            X.append(1)
-            decNumber -= 2**N
+            binNumber.append(1)
+            decNumber -= 2 ** N
         else:
-            X.append(0)
+            binNumber.append(0)
         N -= 1
-    X.append(decNumber)
-    return X
+    binNumber.append(decNumber)
+    return binNumber
 
 def lightNumber(number):
-    x = decToBinList(number)
-    x = x[::-1]
-    GPIO.output(bits, x)
+    binNumber = decToBinList(number)
+    binNumber = binNumber[::-1]
+    GPIO.output(bits, binNumber)
 
 def runningPattern(pattern, direction):
     #bitPattern = decToBinList(pattern)
@@ -63,17 +65,17 @@ def runningPattern(pattern, direction):
                 pattern = pattern >> 1
             elif(getBit(pattern, 0) == 1):
                 pattern = pattern >> 1
-                pattern |= 1 << 7
+                pattern |= 1 << (NUMBER_OF_LEDS - 1)
     elif(direction == 0):
          while True:
             #print(pattern)
             lightNumber(pattern)
             time.sleep(1)
             #pattern = pattern >> 1
-            if(getBit(pattern, 7) == 0):
+            if(getBit(pattern, NUMBER_OF_LEDS - 1) == 0):
                 pattern = pattern << 1
-            elif(getBit(pattern, 7) == 1):
-                pattern &= 127
+            elif(getBit(pattern, NUMBER_OF_LEDS - 1) == 1):
+                pattern &= 2 ** (NUMBER_OF_LEDS - 1) - 1
                 pattern = pattern << 1
                 pattern |= 1
 
@@ -100,6 +102,7 @@ GPIO.setmode(GPIO.BCM)
 
 bits = [24, 25, 8, 7, 12, 16, 20, 21]
 GPIO.setup(bits, GPIO.OUT)
+GPIO.output(bits, 0)
 
 #lightUp(5, 1)
 #GPIO.output(bits, 1)
@@ -109,5 +112,4 @@ GPIO.setup(bits, GPIO.OUT)
 #print(decToBinList(128))
 #lightNumber(16)
 #runningPattern(157, 0)
-GPIO.output(bits, 0)
 SHIM(1, 150)
