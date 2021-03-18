@@ -3,17 +3,18 @@ import time
 import math
 
 NUMBER_OF_LEDS = 8
+bits = [24, 25, 8, 7, 12, 16, 20, 21]
 
 def lightUp(ledNumber, period):
-    GPIO.output(bits[ledNumber], 1)
+    GPIO.output(bits[ledNumber], GPIO.HIGH)
     time.sleep(period)
-    GPIO.output(bits[ledNumber], 0)
+    GPIO.output(bits[ledNumber], GPIO.LOW)
     time.sleep(period)
 
 def lightDown(ledNumber, period):
-    GPIO.output(bits[ledNumber], 0)
+    GPIO.output(bits[ledNumber], GPIO.LOW)
     time.sleep(period)
-    GPIO.output(bits[ledNumber], 1)
+    GPIO.output(bits[ledNumber], GPIO.HIGH)
     time.sleep(period)
 
 def blink(ledNumber, blinkCount, blinkPeriod):
@@ -26,7 +27,7 @@ def runningLight(count, period):
            lightUp(j, period) 
 
 def runningDark(count, period):
-    GPIO.output(bits, 1)
+    GPIO.output(bits, GPIO.HIGH)
     for i in range(0, count):
         for j in range(0, 8):
            lightDown(j, period)
@@ -92,17 +93,13 @@ def SHIM(ledNumber, frequency):
     p.stop()
     GPIO.cleanup()
         
-
 def getBit(number, bit):
     return (number >> bit) & 1 
 
 
-
 GPIO.setmode(GPIO.BCM)
-
-bits = [24, 25, 8, 7, 12, 16, 20, 21]
-GPIO.setup(bits, GPIO.OUT)
-GPIO.output(bits, 0)
+GPIO.setup  (bits, GPIO.OUT) # задание канала на выход
+GPIO.output (bits, GPIO.LOW)		 # 
 
 #lightUp(5, 1)
 #GPIO.output(bits, 1)
@@ -112,4 +109,4 @@ GPIO.output(bits, 0)
 #print(decToBinList(128))
 #lightNumber(16)
 #runningPattern(157, 0)
-SHIM(1, 150)
+#SHIM(1, 150)
