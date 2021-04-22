@@ -2,12 +2,10 @@
 import RPi.GPIO as GPIO
 import time
 import math
-
-#graph
 import numpy as np
 import matplotlib.pyplot as plt
 from time import sleep
-######
+
 
 NUMBER_OF_LEDS = 8
 bits = [10, 9, 11, 5, 6, 13, 19, 26]
@@ -34,8 +32,10 @@ def lightNumber(number):
     binNumber = binNumber[::-1]
     GPIO.output(bits, binNumber)
 
+
 def num2dac(value):
     lightNumber(value)
+
 
 def firstScript():
     while True:
@@ -46,6 +46,7 @@ def firstScript():
             break
         else :
             num2dac(value)
+
 
 def secondScript():
     print("Введите число повторений:")
@@ -61,6 +62,7 @@ def secondScript():
                 num2dac(256 - j)
                 time.sleep(0.1)
         
+
 def thirdScript():
     print("Введите время работы лампочки:")
     time_light = int(input())
@@ -86,18 +88,6 @@ def thirdScript():
     plt.plot(ndarray, amplitude)
     plt.show()
 
-'''
-import wave
-import contextlib
-fname = 'test.wav'
-
-def lastScript():
-    with contextlib.closing(wave.open(fname,'r')) as f:
-    frames = f.getnframes()
-    rate = f.getframerate()
-    duration = frames / float(rate)
-    print("Длительность равна = ",duration)
-'''
 
 def lastScript():
     from scipy.io import wavfile
@@ -124,7 +114,6 @@ def lastScript():
 
 
 GPIO.setmode(GPIO.BCM)
-# GPIO.setmode(GPIO.BOARD) 
 GPIO.setup(bits, GPIO.OUT) # задание канала на выход
 GPIO.output(bits, GPIO.LOW) # 
 
