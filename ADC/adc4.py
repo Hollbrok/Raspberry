@@ -21,7 +21,7 @@ def decToBinList(decNumber) :
 
     for i in range (0, 8) :
         if (decNumber % 2) == 1 :
-            result [i] = 1+-
+            result [i] = 1
         decNumber = decNumber // 2
 
         if decNumber == 0 :
