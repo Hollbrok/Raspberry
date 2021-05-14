@@ -1,4 +1,7 @@
-#In this repository u can see my projects for GET
+
+# This is the repository with my projects for GET (General engineering training) in MIPT (2 sem).
+
+	It was experimental progam of GET, so below you can see my marks for projects on it:
 
 | Lesson       	| Mark |
 | ------------ 	| ---- |
@@ -11,4 +14,4 @@
 | Soldering		| 10   |
 | Capacitor		| 10   |
 
-Final mark for course: 10.
+So I got my final mark for this course: __10__ out of __10__.
